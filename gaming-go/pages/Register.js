@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -13,7 +13,9 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
-
+import * as ImagePicker from "expo-image-picker";
+import Constants from "expo-constants";
+import * as Permissions from "expo-permissions";
 export default function Register({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,11 +24,56 @@ export default function Register({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const [image, setImage] = useState(null);
+  const [imageKTP, setImageKTP] = useState(null);
   const managePass = () => {
     setShowPassword(!showPassword);
   };
+  useEffect(() => {
+    getPermissionAsync();
+  }, []);
 
+  const getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      }
+    }
+  };
+
+  const pickImage = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      console.log(result.assets[0].uri);
+      if (!result.cancelled) {
+        setImage(result.uri);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const pickImageKTP = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      console.log(result.assets);
+      if (!result.cancelled) {
+        setImageKTP(result.uri);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const registAction = () => {
     console.log({ username, email, password, NIK, phoneNumber, address });
   };
@@ -106,6 +153,32 @@ export default function Register({ navigation }) {
               value={address}
               onChangeText={(address) => setAddress(address)}
             />
+          </View>
+          <View style={styles.inputView}>
+            <TouchableOpacity onPress={pickImage}>
+              <Text style={{ color: `#fff`, fontWeight: "bold", padding: 11 }}>
+                {image ? "Change Photo" : "Upload Photo"}
+              </Text>
+            </TouchableOpacity>
+            {/* {image && (
+              <Image
+                source={{ uri: image }}
+                style={{ width: 50, height: 50 }}
+              />
+            )} */}
+          </View>
+          <View style={styles.inputView}>
+            <TouchableOpacity onPress={pickImageKTP}>
+              <Text style={{ color: `#fff`, fontWeight: "bold", padding: 11 }}>
+                {imageKTP ? "Change KTP" : "Upload KTP"}
+              </Text>
+            </TouchableOpacity>
+            {/* {imageKTP && (
+              <Image
+                source={{ uri: imageKTP }}
+                style={{ width: 50, height: 50 }}
+              />
+            )} */}
           </View>
           <TouchableOpacity
             onPress={() =>

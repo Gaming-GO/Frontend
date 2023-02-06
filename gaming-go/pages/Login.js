@@ -185,8 +185,8 @@ export default function Login({ navigation }) {
         <TouchableOpacity onPress={() => navigation.navigate("RegisterPage")}>
           <Text style={styles.forgot_button}>register</Text>
         </TouchableOpacity>
-        {/* <Text style={{ color: "#fff" }}>{location.coords.longitude}</Text>
-        <Text style={{ color: "#fff" }}>{location.coords.latitude}</Text> */}
+        <Text style={{ color: "#fff" }}>{location.coords.longitude}</Text>
+        <Text style={{ color: "#fff" }}>{location.coords.latitude}</Text>
       </ImageBackground>
     </SafeAreaView>
   );
