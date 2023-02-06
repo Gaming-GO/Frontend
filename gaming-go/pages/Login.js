@@ -1,21 +1,13 @@
-import { useState, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
-import { Dimensions } from "react-native";
-import * as Location from "expo-location";
-const { width, height } = Dimensions.get("screen");
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  SafeAreaView,
-  ImageBackground,
-} from "react-native";
-import AppIntroSlider from "react-native-app-intro-slider";
-import { slides } from "../constants/constant";
+import { useState, useEffect } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { Dimensions } from 'react-native';
+import * as Location from 'expo-location';
+const { width, height } = Dimensions.get('screen');
+import { StyleSheet, Text, View, Image, TextInput, Button, TouchableOpacity, SafeAreaView, ImageBackground } from 'react-native';
+import AppIntroSlider from 'react-native-app-intro-slider';
+import { slides } from '../constants/constant';
+import { setToken } from '../store/action/actionCreator';
+import { useDispatch } from 'react-redux';
 
 // const createFormData = (photo, body = {}) => {
 //   const data = new FormData();
@@ -33,35 +25,39 @@ import { slides } from "../constants/constant";
 //   return data;
 // };
 
-export default function Login({ navigation }) {
-  const [login, setLogin] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [location, setLocation] = useState();
+const baseUrl = 'https://3104-2001-448a-110d-1aea-468-5dbe-c57f-7bee.ap.ngrok.io';
 
-  useEffect(() => {
-    const getPermissions = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("please grant location permissisons");
-        return;
-      }
-      let currentLocation = await Location.getCurrentPositionAsync({});
-      setLocation(currentLocation);
-      console.log("location:");
-      console.log(currentLocation);
-    };
-    getPermissions();
-  }, []);
+export default function Login({ navigation }) {
+  const dispatch = useDispatch();
+
+  const [login, setLogin] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  // const [location, setLocation] = useState();
+
+  // useEffect(() => {
+  //   const getPermissions = async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== 'granted') {
+  //       console.log('please grant location permissisons');
+  //       return;
+  //     }
+  //     let currentLocation = await Location.getCurrentPositionAsync({});
+  //     setLocation(currentLocation);
+  //     console.log('location:');
+  //     console.log(currentLocation);
+  //   };
+  //   getPermissions();
+  // }, []);
 
   const buttonLabel = (label) => {
     return (
       <View style={{ padding: 12 }}>
         <Text
           style={{
-            color: "#fff",
-            fontWeight: "600",
+            color: '#fff',
+            fontWeight: '600',
             fontSize: 16,
           }}
         >
@@ -76,15 +72,12 @@ export default function Login({ navigation }) {
         data={slides}
         renderItem={({ item }) => {
           return (
-            <ImageBackground
-              source={require("../assets/background1.png")}
-              style={styles.appIntroContainer}
-            >
+            <ImageBackground source={require('../assets/background1.png')} style={styles.appIntroContainer}>
               <Text
                 style={{
-                  color: "#fff",
+                  color: '#fff',
                   fontSize: 30,
-                  fontWeight: "bold",
+                  fontWeight: 'bold',
                 }}
               >
                 {item.name}
@@ -100,10 +93,10 @@ export default function Login({ navigation }) {
 
               <Text
                 style={{
-                  fontWeight: "bold",
-                  color: "#072F4A",
+                  fontWeight: 'bold',
+                  color: '#072F4A',
                   fontSize: 14,
-                  textAlign: "center",
+                  textAlign: 'center',
                   paddingTop: 10,
                 }}
               >
@@ -113,15 +106,15 @@ export default function Login({ navigation }) {
           );
         }}
         dotStyle={{
-          backgroundColor: "#fff",
+          backgroundColor: '#fff',
         }}
         activeDotStyle={{
-          backgroundColor: "red",
+          backgroundColor: 'red',
           width: 30,
         }}
-        renderNextButton={() => buttonLabel("NEXT")}
-        renderSkipButton={() => buttonLabel("SKIP >>>")}
-        renderDoneButton={() => buttonLabel("DONE")}
+        renderNextButton={() => buttonLabel('NEXT')}
+        renderSkipButton={() => buttonLabel('SKIP >>>')}
+        renderDoneButton={() => buttonLabel('DONE')}
         onDone={() => {
           setLogin(true);
         }}
@@ -134,59 +127,54 @@ export default function Login({ navigation }) {
   };
 
   const loginForm = () => {
-    console.log({ email, password });
+    let input = { email, password };
+    fetch(baseUrl + '/pub/login', {
+      method: 'POST',
+      body: JSON.stringify(input),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        dispatch(setToken(data));
+        navigation.navigate('HomeScreen');
+      });
   };
   return (
     <SafeAreaView>
       <ImageBackground
-        source={require("../assets/background.png")}
+        source={require('../assets/background.png')}
         style={{
           //   paddingTop: ,
-          width: "100%",
-          height: "100%",
-          alignItems: "center",
-          justifyContent: "center",
-          resizeMode: "contain",
+          width: '100%',
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          resizeMode: 'contain',
         }}
       >
-        <Image style={styles.image} source={require("../assets/Logo1.png")} />
+        <Image style={styles.image} source={require('../assets/Logo1.png')} />
         <StatusBar style="auto" />
         <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Email"
-            placeholderTextColor="#fff"
-            onChangeText={(email) => setEmail(email)}
-            defaultValue={email}
-          />
+          <TextInput style={styles.TextInput} placeholder="Email" placeholderTextColor="#fff" onChangeText={(email) => setEmail(email)} defaultValue={email} />
         </View>
-        <View style={{ ...styles.inputView, flexDirection: "row" }}>
-          <TextInput
-            style={{ ...styles.TextInput, marginLeft: 50 }}
-            placeholder="Password"
-            placeholderTextColor="#fff"
-            secureTextEntry={!showPassword}
-            onChangeText={(password) => setPassword(password)}
-            defaultValue={password}
-          />
+        <View style={{ ...styles.inputView, flexDirection: 'row' }}>
+          <TextInput style={{ ...styles.TextInput, marginLeft: 50 }} placeholder="Password" placeholderTextColor="#fff" secureTextEntry={!showPassword} onChangeText={(password) => setPassword(password)} defaultValue={password} />
           <TouchableOpacity onPress={managePass}>
-            <Text style={styles.showPasswordText}>
-              {showPassword ? "Hide" : "Show"}
-            </Text>
+            <Text style={styles.showPasswordText}>{showPassword ? 'Hide' : 'Show'}</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={() => loginForm(email, password)}
-          style={styles.loginBtn}
-        >
+        <TouchableOpacity onPress={() => loginForm(email, password)} style={styles.loginBtn}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
         <Text style={styles.registerText}>Dont have an account?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("RegisterPage")}>
+        <TouchableOpacity onPress={() => navigation.navigate('RegisterPage')}>
           <Text style={styles.forgot_button}>register</Text>
         </TouchableOpacity>
-        <Text style={{ color: "#fff" }}>{location.coords.longitude}</Text>
-        <Text style={{ color: "#fff" }}>{location.coords.latitude}</Text>
+        {/* <Text style={{ color: "#fff" }}>{location.coords.longitude}</Text>
+        <Text style={{ color: "#fff" }}>{location.coords.latitude}</Text> */}
       </ImageBackground>
     </SafeAreaView>
   );
@@ -195,9 +183,9 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000000",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#000000',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   image: {
     marginBottom: 40,
@@ -205,51 +193,51 @@ const styles = StyleSheet.create({
     height: 100,
   },
   inputView: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     borderRadius: 10,
-    borderColor: "#fff",
+    borderColor: '#fff',
     borderWidth: 1,
-    width: "70%",
+    width: '70%',
     height: 45,
     marginBottom: 20,
-    alignItems: "center",
+    alignItems: 'center',
   },
   TextInput: {
     height: 50,
     flex: 1,
     padding: 10,
-    textAlign: "center",
-    color: "#fff",
-    fontWeight: "900",
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: '900',
   },
   forgot_button: {
     height: 30,
     marginBottom: 30,
-    color: "#fff",
+    color: '#fff',
   },
   loginBtn: {
-    width: "50%",
+    width: '50%',
     borderRadius: 25,
     height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 40,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   registerText: {
     paddingTop: 10,
-    color: "#fff",
+    color: '#fff',
   },
   loginText: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   showPasswordText: {
-    color: "#fff",
+    color: '#fff',
     paddingRight: 10,
   },
   appIntroContainer: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
     padding: 15,
     paddingTop: 100,
     // backgroundColor: `#ffe4b5`,
