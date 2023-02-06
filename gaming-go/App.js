@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import HomeScreen from "./pages/HomeScreen";
 import DetailsScreen from "./pages/DetailScreen";
 import RoomScreen from "./pages/ChatScreen";
+import Messaging from "./components/Messaging";
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,7 @@ export default function App() {
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="DetailScreen" component={DetailsScreen} />
         <Stack.Screen name="ChatScreen" component={RoomScreen} />
+        <Stack.Screen name="Messaging" component={Messaging} />
       </Stack.Navigator>
     </NavigationContainer>
   );
