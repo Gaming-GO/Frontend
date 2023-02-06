@@ -1,0 +1,46 @@
+{
+  "name": "gaming-go",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^13.0.0",
+    "@react-navigation/bottom-tabs": "^6.5.4",
+    "@react-navigation/native": "^6.1.3",
+    "@react-navigation/stack": "^6.3.12",
+    "expo": "~47.0.12",
+    "expo-constants": "^14.0.2",
+    "expo-image-picker": "^14.0.2",
+    "expo-location": "^15.0.1",
+    "expo-permissions": "^14.0.0",
+    "expo-secure-store": "~12.0.0",
+    "expo-status-bar": "~1.4.2",
+    "i": "^0.3.7",
+    "npm": "^9.4.1",
+    "react": "18.1.0",
+    "react-native": "0.70.5",
+    "react-native-app-intro-slider": "^4.0.4",
+    "react-native-gesture-handler": "^2.8.0",
+    "react-native-gifted-chat": "^1.1.1",
+    "react-native-image-picker": "^5.0.1",
+    "react-native-image-slider-box": "^2.0.7",
+    "react-native-reanimated": "^2.12.0",
+    "react-native-snap-carousel": "^3.9.1",
+    "react-native-vector-icons": "^9.2.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "redux-thunk": "^2.4.2",
+    "socket.io-client": "^4.5.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "deprecated-react-native-prop-types": "^4.0.0"
+  },
+  "private": true
+}
