@@ -1,35 +1,46 @@
+import { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SecondaryButton } from '../components/button';
 import COLORS from '../constants/colors';
+import { addTransactionFromHehe } from '../store/action/actionCreator';
 
-const baseUrl = 'https://3104-2001-448a-110d-1aea-468-5dbe-c57f-7bee.ap.ngrok.io';
+// const baseUrl = 'https://3104-2001-448a-110d-1aea-468-5dbe-c57f-7bee.ap.ngrok.io';
+const baseUrl = 'https://e06d-2001-448a-1101-171a-85d2-8409-5431-4c0.ap.ngrok.io';
 
 const DetailsScreen = ({ navigation, route }) => {
+  const [rentEnd, setRentEnd] = useState(1);
   const gadget = route.params;
+
+  const dispatch = useDispatch();
+
+  let temp = rentEnd;
 
   const access_token = useSelector((state) => state.users.access_token);
   // console.log(access_token);
 
   const addTransaction = (id) => {
-    console.log(id);
+    // console.log(id);
+    // console.log(temp);
     // console.log('lllllllllllllllllllllllllllllllll');
-    const rentEnd = 5;
-    fetch(baseUrl + `/pub/rent/${id}`, {
-      method: 'POST',
-      body: JSON.stringify({ rentEnd }),
-      headers: {
-        'Content-Type': 'application/json',
-        access_token: access_token,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        navigation.navigate('HomeScreen');
-      });
+    // rentEnd = 5;
+    dispatch(addTransactionFromHehe(id, access_token, temp)).then((_) => navigation.navigate('HomeScreen'));
+
+    // fetch(baseUrl + `/pub/rent/${id}`, {
+    //   method: 'POST',
+    //   body: JSON.stringify({ rentEnd: temp }),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     access_token: access_token,
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     navigation.navigate('HomeScreen');
+    //   });
   };
 
   return (
@@ -62,6 +73,13 @@ const DetailsScreen = ({ navigation, route }) => {
               <Text style={{ fontSize: 20, fontWeight: '600' }}>Rp {gadget.price}</Text>
             </View>
           </View>
+          {/* tombol +- */}
+          <View style={style.actionBtn}>
+            <Icon name="remove" size={25} color={COLORS.white} onPress={() => setRentEnd((temp -= 1))} />
+            <Text>{temp}</Text>
+            <Icon name="add" size={25} color={COLORS.white} onPress={() => setRentEnd((temp += 1))} />
+          </View>
+
           <Text style={style.detailsText}>{gadget.description}</Text>
 
           <View style={{ marginTop: 40, marginBottom: 40 }}>
@@ -101,6 +119,16 @@ const style = StyleSheet.create({
     lineHeight: 22,
     fontSize: 16,
     color: COLORS.white,
+  },
+  actionBtn: {
+    width: 80,
+    height: 30,
+    backgroundColor: COLORS.primary,
+    borderRadius: 30,
+    paddingHorizontal: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
 });
 

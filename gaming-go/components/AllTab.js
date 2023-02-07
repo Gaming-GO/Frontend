@@ -1,49 +1,62 @@
 import { useEffect, useState } from 'react';
-import { Dimensions, Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Button, Dimensions, Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { FlatList, ScrollView, TextInput, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import categories from '../constants/categories';
 import COLORS from '../constants/colors';
 import gadgets from '../constants/gadget';
+import { fetchAllDevices, fetchByFilter, fetchCategories } from '../store/action/actionCreator';
 const { width } = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 
-const baseUrl = 'https://3104-2001-448a-110d-1aea-468-5dbe-c57f-7bee.ap.ngrok.io';
+// const baseUrl = 'https://e06d-2001-448a-1101-171a-85d2-8409-5431-4c0.ap.ngrok.io';
 
 export default function AllTab({ navigation }) {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
+  const dispatch = useDispatch();
+  const [filteredDevices, setFilteredDevices] = useState(null);
 
-  const [gadgets, setGadgets] = useState();
+  let categoriesData = useSelector((state) => state.users.categories);
+  // const filteredData = useSelector((state) => state.users.filteredDevices);
+  let gadgets = useSelector((state) => state.users.allDevices);
+
+  // const filter = filteredData.Devices;
+
+  // let filteredDevices;
+  const filterByCategory = (id) => {
+    // console.log(id);
+    // dispatch(fetchByFilter(id));
+    let a = gadgets.filter((e) => e.CategoryId == id);
+    setFilteredDevices(a);
+    // console.log(filteredDevices);
+    // return;
+  };
+
+  console.log(categoriesData, '<<<<+=====================');
+  // console.log(categoriesData, '<<<<+==========categoriesData===========');
+
+  // const [gadgets, setGadgets] = useState();
 
   // const TOKEN = useSelector((state) => console.log(state));
 
   useEffect(() => {
-    fetch(baseUrl + '/pub/devices', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-        setGadgets(data);
-      });
+    dispatch(fetchAllDevices());
+    dispatch(fetchCategories());
   }, []);
 
   const ListCategories = () => {
     return (
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={style.categoriesListContainer}>
-        {categories.map((category, index) => (
-          <TouchableOpacity key={index} activeOpacity={0.8} onPress={() => setSelectedCategoryIndex(index)}>
+        {categoriesData.map((category, index) => (
+          <TouchableOpacity key={index} activeOpacity={0.8} onPress={() => filterByCategory(category.id)}>
             <View
               style={{
                 backgroundColor: selectedCategoryIndex == index ? COLORS.primary : COLORS.secondary,
                 ...style.categoryBtn,
               }}
             >
-              <View style={style.categoryBtnImgCon}>
+              {/* <View style={style.categoryBtnImgCon}>
                 <Image
                   source={category.image}
                   style={{
@@ -53,7 +66,7 @@ export default function AllTab({ navigation }) {
                     borderRadius: 100,
                   }}
                 />
-              </View>
+              </View> */}
               <Text
                 style={{
                   fontSize: 15,
@@ -136,9 +149,17 @@ export default function AllTab({ navigation }) {
         </View> */}
       </View>
       <View>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 15, borderWidth: 1 }}>
+          <Button title="all" />
+          <Button title="High-end" />
+          <Button title="Mid-end" />
+          <Button title="Low-end" />
+        </View>
+
         <ListCategories />
       </View>
-      <FlatList showsVerticalScrollIndicator={false} numColumns={2} data={gadgets} renderItem={({ item }) => <Card gadget={item} />} />
+
+      <FlatList showsVerticalScrollIndicator={false} numColumns={2} data={filteredDevices} renderItem={({ item }) => <Card gadget={item} />} />
     </SafeAreaView>
   );
 }
