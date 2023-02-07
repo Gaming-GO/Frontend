@@ -3,7 +3,7 @@ import { FETCH_ALL_DEVICES, FETCH_BY_FILTER, FETCH_CATEGORIES, FETCH_NEAREST_SUC
 
 // const baseUrl = 'http://localhost:3001';
 
-const baseUrl = 'https://e06d-2001-448a-1101-171a-85d2-8409-5431-4c0.ap.ngrok.io';
+const baseUrl = 'https://403a-139-192-36-123.ap.ngrok.io';
 
 export const setToken = (payload) => {
   // console.log(payload, '<<<<<<<< ini payload');

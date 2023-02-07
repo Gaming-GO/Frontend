@@ -25,8 +25,8 @@ export default function App() {
             tabBarActiveTintColor: 'tomato',
           }}
         >
-          {/* <Stack.Screen name="LoginPage" component={Login} options={{ headerShown: false }} />
-          <Stack.Screen name="RegisterPage" component={Register} options={{ headerShown: false }} /> */}
+          <Stack.Screen name="LoginPage" component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name="RegisterPage" component={Register} options={{ headerShown: false }} />
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="DetailScreen" component={DetailsScreen} />
           <Stack.Screen name="ChatScreen" component={RoomScreen} />

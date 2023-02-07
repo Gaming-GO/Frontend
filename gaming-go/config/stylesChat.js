@@ -77,7 +77,7 @@ export const stylesChat = StyleSheet.create({
   },
   messaginginputContainer: {
     width: "100%",
-    height: 90,
+    height: 105,
     backgroundColor: "white",
     paddingVertical: 30,
     paddingHorizontal: 15,
@@ -90,6 +90,7 @@ export const stylesChat = StyleSheet.create({
     flex: 1,
     marginRight: 10,
     borderRadius: 20,
+    color:"black"
   },
   messagingbuttonContainer: {
     width: "30%",

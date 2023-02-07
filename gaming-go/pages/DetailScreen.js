@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -8,11 +8,28 @@ import COLORS from '../constants/colors';
 import { addTransactionFromHehe } from '../store/action/actionCreator';
 
 // const baseUrl = 'https://3104-2001-448a-110d-1aea-468-5dbe-c57f-7bee.ap.ngrok.io';
-const baseUrl = 'https://e06d-2001-448a-1101-171a-85d2-8409-5431-4c0.ap.ngrok.io';
+const baseUrl = 'https://403a-139-192-36-123.ap.ngrok.io';
 
 const DetailsScreen = ({ navigation, route }) => {
   const [rentEnd, setRentEnd] = useState(1);
+  const [currentUser, setCurrentUser] = useState(0);
   const gadget = route.params;
+  useEffect(() => {
+    fetch(baseUrl + "/pub/user", {
+      headers: {
+        "Content-Type": "application/json",
+        access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc1NzgyNDg3fQ.0JFb-MSeVLI_xa7T0Nz0CjIwXBKxyghR5S9td9DKBww"
+      }
+    })
+    .then(resp => {
+      if(!resp.ok) throw {name:"Failed here", status:resp.status}
+      return resp.json()
+    })
+    .then(data => {
+      setCurrentUser(data.id)
+    })
+    .catch(err => console.log(err))
+  }, [])
 
   const dispatch = useDispatch();
 
@@ -42,6 +59,8 @@ const DetailsScreen = ({ navigation, route }) => {
     //     navigation.navigate('HomeScreen');
     //   });
   };
+
+  
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white }}>
@@ -81,9 +100,12 @@ const DetailsScreen = ({ navigation, route }) => {
           </View>
 
           <Text style={style.detailsText}>{gadget.description}</Text>
-
           <View style={{ marginTop: 40, marginBottom: 40 }}>
             <SecondaryButton title="Add To Cart" onPress={() => addTransaction(gadget.id)} />
+            <SecondaryButton title="Chat Seller" onPress={() => {
+              console.log(gadget.UserId, currentUser, " att button");
+              navigation.navigate("Messaging", {toUserId:gadget.UserId,fromUserId:currentUser, test:"teslkjadlj"})
+            }} />
           </View>
         </View>
       </ScrollView>

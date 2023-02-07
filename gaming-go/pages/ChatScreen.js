@@ -1,12 +1,51 @@
 // import { SafeAreaView, Text } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Pressable, SafeAreaView, FlatList } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import ChatComponent from "../components/ChatComponent";
 import { stylesChat } from "../config/stylesChat";
 // import { GiftedChat } from "react-native-gifted-chat";
+import {baseUrl} from '../store/action/actionType';
 
 export default function RoomScreen() {
+  const [listUser, setListUser] = useState([])
+  const [currentUser, setCurrentUser] = useState(0);  
+  const [allUsers, setAllUsers] = useState([]);
+
+
+
+  useEffect(() => {
+    fetch(baseUrl + "/pub/user/0", {
+      headers: {
+        "Content-Type": "application/json",
+        access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc1NzgyNDg3fQ.0JFb-MSeVLI_xa7T0Nz0CjIwXBKxyghR5S9td9DKBww"
+      }
+    })
+    .then(resp => {
+      if(!resp.ok) throw {name:"Failed here", status:resp.status}
+      return resp.json()
+    })
+    .then(data => {
+      setCurrentUser(data.id)
+      return fetch(baseUrl + `/message/${data.id}`)
+    })
+    .then(resp => {
+      if(!resp.ok) throw {name:"Failed here3"}
+      return resp.json()
+    })
+    .then(data => {
+      setListUser(data)
+      return fetch(baseUrl + "/pub/users")
+    })
+    .then(resp => {
+      if(!resp.ok) throw {name:"Failed on username"}
+      return resp.json()
+    })
+    .then(data => {
+      setAllUsers(data);
+    })
+    .catch(err => console.log(err))
+  }, [])
   //   const [messages, setMessages] = useState([
   //     /**
   //      * Mock message data
@@ -96,9 +135,9 @@ export default function RoomScreen() {
       <View style={stylesChat.chatlistContainer}>
         {rooms.length > 0 ? (
           <FlatList
-            data={rooms}
-            renderItem={({ item }) => <ChatComponent item={item} />}
-            keyExtractor={(item) => item.id}
+            data={listUser}
+            renderItem={({ item }) => <ChatComponent item={item} mainUserId={currentUser} userName={allUsers}/>}
+            keyExtractor={(item) => item._id}
           />
         ) : (
           <View style={stylesChat.chatemptyContainer}>

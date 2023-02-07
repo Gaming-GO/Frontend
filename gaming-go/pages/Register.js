@@ -8,7 +8,7 @@ import * as Location from 'expo-location';
 // import { BASE_URL } from '../store/action/actionType';
 
 // const baseUrl = 'https://3104-2001-448a-110d-1aea-468-5dbe-c57f-7bee.ap.ngrok.io';
-const baseUrl = 'https://e06d-2001-448a-1101-171a-85d2-8409-5431-4c0.ap.ngrok.io';
+const baseUrl = 'https://403a-139-192-36-123.ap.ngrok.io';
 
 export default function Register({ navigation }) {
   const [email, setEmail] = useState('');

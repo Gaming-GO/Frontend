@@ -9,7 +9,7 @@ import { PrimaryButton } from './button';
 import { WebView } from 'react-native-webview';
 import { fetchTransaction } from '../store/action/actionCreator';
 
-const baseUrl = 'https://e06d-2001-448a-1101-171a-85d2-8409-5431-4c0.ap.ngrok.io';
+const baseUrl = 'https://403a-139-192-36-123.ap.ngrok.io';
 
 export default function TransactionTab({ navigation }) {
   const [interval, setInterval] = useState(0);

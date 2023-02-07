@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   View,
   TextInput,
@@ -8,7 +8,9 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
 } from "react-native";
+import socket from "../config/socket";
 import { stylesChat } from "../config/stylesChat";
+import {baseUrl} from '../store/action/actionType';
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import MessageComponent from "./MessageComponent";
@@ -29,10 +31,11 @@ const Messaging = ({ route, navigation }) => {
     },
   ]);
   const [message, setMessage] = useState("");
-  const [user, setUser] = useState("");
+  const [inMsg, setInMsg] = useState({});
+  const [allChat, setAllChat] = useState([]);
 
   //👇🏻 Access the chatroom's name and id
-  const { name, id } = route.params;
+  const { fromUserId, toUserId } = route.params;
 
   //👇🏻 This function gets the username saved on AsyncStorage
   //   const getUsername = async () => {
@@ -46,32 +49,51 @@ const Messaging = ({ route, navigation }) => {
   //     }
   //   };
 
+  useEffect(() => {
+    fetch(baseUrl+ `/message/${fromUserId}/${toUserId}`)
+    .then(resp => {
+      if(!resp.ok) throw {name:"Failed at messaging"}
+      return resp.json()
+    })
+    .then(data => {
+      setAllChat(data);
+      setInMsg(data.message);
+      console.log(data.roomId, " <<<<<<<<<<<<<<<<<<<<<<<<<<<<ROOM");
+      socket.emit("join:room", data.roomId)
+    })
+    .catch(err => console.log(err.name))
+  }, [])
+
   //👇🏻 Sets the header title to the name chatroom's name
-  useLayoutEffect(() => {
-    navigation.setOptions({ title: name });
-    // getUsername();
-  }, []);
+  // useLayoutEffect(() => {
+  //   navigation.setOptions({ title: name });
+  //   getUsername();
+  // }, []);
 
   /*👇🏻 
         This function gets the time the user sends a message, then 
         logs the username, message, and the timestamp to the console.
      */
+
+        useEffect(() => {
+
+          socket.on("resp:msg", (msg) => {
+            // setAllChat([...allChat, {fromUserId,toUserId, message:[...allChat.message, {sender:fromUserId,message:msg,created:(new Date())}]}])
+            setInMsg([...inMsg, {sender:msg.from, message:msg, created:(new Date())}])
+          })
+        }, [inMsg])
   const handleNewMessage = () => {
-    const hour =
-      new Date().getHours() < 10
-        ? `0${new Date().getHours()}`
-        : `${new Date().getHours()}`;
-
-    const mins =
-      new Date().getMinutes() < 10
-        ? `0${new Date().getMinutes()}`
-        : `${new Date().getMinutes()}`;
-
-    console.log({
-      message,
-      user,
-      timestamp: { hour, mins },
-    });
+    const dataMsg = {from:fromUserId, to:toUserId, message}
+    socket.emit("chat:msg", {msg:message, room:allChat.roomId})
+    fetch(baseUrl+ "/message", {
+      method:"POST",
+      body:JSON.stringify(dataMsg),
+      headers: {
+        "Content-Type" : "application/json"
+      }
+    })
+    .then(() => console.log("success"))
+    .catch(err => console.log(err));
   };
 
   return (
@@ -84,11 +106,11 @@ const Messaging = ({ route, navigation }) => {
       >
         {chatMessages[0] ? (
           <FlatList
-            data={chatMessages}
-            renderItem={({ item }) => (
-              <MessageComponent item={item} user={user} />
+            data={inMsg}
+            renderItem={({ item,idx }) => (
+              <MessageComponent key={idx} item={item} currentUser={allChat.fromUserId} />
             )}
-            keyExtractor={(item) => item.id}
+            // keyExtractor={(item) => item.id}
           />
         ) : (
           ""

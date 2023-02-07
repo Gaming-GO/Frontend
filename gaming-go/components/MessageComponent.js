@@ -3,8 +3,8 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { stylesChat } from "../config/stylesChat";
 
-export default function MessageComponent({ item, user }) {
-  const status = item.user !== user;
+export default function MessageComponent({ item, currentUser }) {
+  const status = item.sender === currentUser;
 
   return (
     <View>
@@ -32,10 +32,10 @@ export default function MessageComponent({ item, user }) {
                   ]
             }
           >
-            <Text>{item.text}</Text>
+            <Text>{item.message}</Text>
           </View>
         </View>
-        <Text style={{ marginLeft: 40 }}>{item.time}</Text>
+        <Text style={{ marginLeft: 40 }}>{item.created.slice(11,19)}</Text>
       </View>
     </View>
   );

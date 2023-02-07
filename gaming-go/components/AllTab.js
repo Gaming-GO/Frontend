@@ -10,7 +10,7 @@ import { fetchAllDevices, fetchByFilter, fetchCategories } from '../store/action
 const { width } = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 
-// const baseUrl = 'https://e06d-2001-448a-1101-171a-85d2-8409-5431-4c0.ap.ngrok.io';
+// const baseUrl = 'https://403a-139-192-36-123.ap.ngrok.io';
 
 export default function AllTab({ navigation }) {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
@@ -84,6 +84,7 @@ export default function AllTab({ navigation }) {
     );
   };
   const Card = ({ gadget }) => {
+    // console.log(gadget, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
     return (
       <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9} onPress={() => navigation.navigate('DetailScreen', gadget)}>
         <View style={style.card}>
