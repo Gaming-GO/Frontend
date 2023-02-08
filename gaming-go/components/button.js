@@ -1,5 +1,5 @@
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
-import COLORS from "../constants/colors";
+import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import COLORS from '../constants/colors';
 
 const PrimaryButton = ({ title, onPress = () => {} }) => {
   return (
@@ -21,13 +21,14 @@ const SecondaryButton = ({ title, onPress = () => {} }) => {
 };
 
 const style = StyleSheet.create({
-  title: { color: COLORS.white, fontWeight: "bold", fontSize: 18 },
+  title: { color: COLORS.white, fontWeight: 'bold', fontSize: 18 },
   btnContainer: {
+    width: 180,
     backgroundColor: COLORS.primary,
-    height: 60,
+    height: 50,
     borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

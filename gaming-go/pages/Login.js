@@ -25,7 +25,8 @@ import { useDispatch } from 'react-redux';
 //   return data;
 // };
 
-const baseUrl = 'https://3104-2001-448a-110d-1aea-468-5dbe-c57f-7bee.ap.ngrok.io';
+// const baseUrl = 'https://3104-2001-448a-110d-1aea-468-5dbe-c57f-7bee.ap.ngrok.io';
+const baseUrl = 'https://2929-2001-448a-1101-171a-25f6-184f-b1b4-5c07.ap.ngrok.io';
 
 export default function Login({ navigation }) {
   const dispatch = useDispatch();
@@ -137,7 +138,7 @@ export default function Login({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         dispatch(setToken(data));
         navigation.navigate('HomeScreen');
       });
