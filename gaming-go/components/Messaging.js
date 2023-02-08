@@ -17,26 +17,19 @@ import {baseUrl} from '../store/action/actionType';
 import MessageComponent from "./MessageComponent";
 
 const Messaging = ({ route, navigation }) => {
-  // const [chatMessages, setChatMessages] = useState([
-  //   {
-  //     id: "1",
-  //     text: "Hello btb, welcome!",
-  //     time: "07:50",
-  //     user: "Tomer",
-  //   },
-  //   {
-  //     id: "2",
-  //     text: "Hi fan, thank you! 😇",
-  //     time: "08:50",
-  //     user: "David",
-  //   },
-  // ]);
   const [message, setMessage] = useState("");
   const [inMsg, setInMsg] = useState({});
+  const [scrollRef, setScrollRef] = useState(null);
   const [allChat, setAllChat] = useState([]);
 
   //👇🏻 Access the chatroom's name and id
   const { fromUserId, toUserId } = route.params;
+
+  function scrollToEnd() {
+    setTimeout(() => {
+      scrollRef.scrollToEnd();
+    }, 400);
+  }
 
   useEffect(() => {
     // console.log("running outside socket")
@@ -51,7 +44,7 @@ const Messaging = ({ route, navigation }) => {
           const newS = [...prev];
           newS.push(respMsg)
           return newS
-        })
+        })        
       })
       return () => {
         socket.off("resp:msg");
@@ -95,6 +88,7 @@ const Messaging = ({ route, navigation }) => {
     // })
     .catch(err => console.log(err));
     setMessage("");
+    scrollToEnd();
   };
 
   // console.log(inMsg, " INMSGSSSSS");
@@ -107,7 +101,7 @@ const Messaging = ({ route, navigation }) => {
           { paddingVertical: 15, paddingHorizontal: 10 },
         ]}
       >
-        <ScrollView>
+        <ScrollView ref={(scrollview) => setScrollRef(scrollview)}>
           {
             (inMsg && Object.keys(inMsg).length !== 0) ? inMsg.map((val,idx) => {
               return <MessageComponent item={val} key={idx} currentUser={allChat.fromUserId}/>

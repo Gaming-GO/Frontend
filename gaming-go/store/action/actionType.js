@@ -6,4 +6,5 @@ export const FETCH_NEAREST_SUCCES = 'slebewwww_nearest';
 export const FETCH_CATEGORIES = 'heyaaa';
 export const FETCH_ALL_DEVICES = 'Fetch_all';
 export const FETCH_BY_FILTER = 'fetch_by_filterrr';
+export const FETCH_HISTORY = 'fetch_history_succes';
 export const baseUrl = "https://ad2d-139-192-36-123.ap.ngrok.io"

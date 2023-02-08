@@ -11,6 +11,7 @@ import Messaging from './components/Messaging';
 import { Provider } from 'react-redux';
 import store from './store/index';
 import MidTransScreen from './pages/Midtrans';
+import History from './pages/History';
 
 const Stack = createStackNavigator();
 
@@ -25,13 +26,14 @@ export default function App() {
             tabBarActiveTintColor: 'tomato',
           }}
         >
-          <Stack.Screen name="LoginPage" component={Login} options={{ headerShown: false }} />
-          <Stack.Screen name="RegisterPage" component={Register} options={{ headerShown: false }} />
+          {/* <Stack.Screen name="LoginPage" component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name="RegisterPage" component={Register} options={{ headerShown: false }} /> */}
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="DetailScreen" component={DetailsScreen} />
           <Stack.Screen name="ChatScreen" component={RoomScreen} />
           <Stack.Screen name="Messaging" component={Messaging} />
           <Stack.Screen name="MidTransScreen" component={MidTransScreen} />
+          <Stack.Screen name="History" component={History} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

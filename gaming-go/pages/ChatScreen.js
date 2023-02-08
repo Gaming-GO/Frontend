@@ -18,7 +18,7 @@ export default function RoomScreen() {
     fetch(baseUrl + "/pub/user/0", {
       headers: {
         "Content-Type": "application/json",
-        access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc1NzgyNDg3fQ.0JFb-MSeVLI_xa7T0Nz0CjIwXBKxyghR5S9td9DKBww"
+        access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc1ODY4MzYzfQ.jVuRLVRTYJXxJuaNRdobjnY5YvKXahW15rcMnNHgtE8"
       }
     })
     .then(resp => {

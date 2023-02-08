@@ -1,13 +1,14 @@
-import { FETCH_ALL_DEVICES, FETCH_BY_FILTER, FETCH_CATEGORIES, FETCH_NEAREST_SUCCES, FETCH_TRANSACTION_SUCCESS, SET_TOKEN } from '../action/actionType';
+import { FETCH_ALL_DEVICES, FETCH_BY_FILTER, FETCH_CATEGORIES, FETCH_HISTORY, FETCH_NEAREST_SUCCES, FETCH_TRANSACTION_SUCCESS, SET_TOKEN } from '../action/actionType';
 
 const users = {
   users: [],
-  access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTY3NTczODk1MH0.r5CBmaVFGZ-clRgBML7z7Rmiz1sKXOD7Y-HqSZMAFm0',
+  access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc1ODY4MzYzfQ.jVuRLVRTYJXxJuaNRdobjnY5YvKXahW15rcMnNHgtE8',
   Transaction: { Details: [] },
   nearest: [],
   categories: [],
   allDevices: [],
   filteredDevices: [],
+  History: [],
 };
 
 export default function userReducer(state = users, action) {
@@ -49,6 +50,12 @@ export default function userReducer(state = users, action) {
       return {
         ...state,
         filteredDevices: action.payload,
+      };
+
+    case FETCH_HISTORY:
+      return {
+        ...state,
+        History: action.payload,
       };
     default:
       return {
