@@ -1,4 +1,4 @@
-import { FETCH_ALL_DEVICES, FETCH_BY_FILTER, FETCH_CATEGORIES, FETCH_NEAREST_SUCCES, FETCH_TRANSACTION_SUCCESS, SET_TOKEN } from '../action/actionType';
+import { FETCH_ALL_DEVICES, FETCH_BY_FILTER, FETCH_CATEGORIES, FETCH_HISTORY, FETCH_NEAREST_SUCCES, FETCH_TRANSACTION_SUCCESS, SET_TOKEN } from '../action/actionType';
 
 const users = {
   users: [],
@@ -8,6 +8,7 @@ const users = {
   categories: [],
   allDevices: [],
   filteredDevices: [],
+  History: [],
 };
 
 export default function userReducer(state = users, action) {
@@ -49,6 +50,12 @@ export default function userReducer(state = users, action) {
       return {
         ...state,
         filteredDevices: action.payload,
+      };
+
+    case FETCH_HISTORY:
+      return {
+        ...state,
+        History: action.payload,
       };
     default:
       return {

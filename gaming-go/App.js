@@ -11,6 +11,7 @@ import Messaging from './components/Messaging';
 import { Provider } from 'react-redux';
 import store from './store/index';
 import MidTransScreen from './pages/Midtrans';
+import History from './pages/History';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,7 @@ export default function App() {
           <Stack.Screen name="ChatScreen" component={RoomScreen} />
           <Stack.Screen name="Messaging" component={Messaging} />
           <Stack.Screen name="MidTransScreen" component={MidTransScreen} />
+          <Stack.Screen name="History" component={History} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

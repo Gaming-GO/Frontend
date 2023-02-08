@@ -24,7 +24,8 @@ export default function AllTab({ navigation }) {
   // const filter = filteredData.Devices;
 
   // let filteredDevices;
-  const filterByCategory = (id) => {
+  const filterByCategory = (id, index) => {
+    setSelectedCategoryIndex(index);
     // console.log(id);
     // dispatch(fetchByFilter(id));
     let a = gadgets.filter((e) => e.CategoryId == id);
@@ -33,26 +34,30 @@ export default function AllTab({ navigation }) {
     // return;
   };
 
-  console.log(categoriesData, '<<<<+=====================');
-  // console.log(categoriesData, '<<<<+==========categoriesData===========');
+  // console.log(categoriesData, '<<<<+=====================');
+  const filterSpecs = [
+    {
+      name: 'All',
+    },
+    {
+      name: 'High-end',
+    },
+    {
+      name: 'Mid-end',
+    },
+    {
+      name: 'Low-end',
+    },
+  ];
 
-  // const [gadgets, setGadgets] = useState();
-
-  // const TOKEN = useSelector((state) => console.log(state));
-
-  useEffect(() => {
-    dispatch(fetchAllDevices());
-    dispatch(fetchCategories());
-  }, []);
-
-  const ListCategories = () => {
+  const ListSpecs = () => {
     return (
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={style.categoriesListContainer}>
-        {categoriesData.map((category, index) => (
-          <TouchableOpacity key={index} activeOpacity={0.8} onPress={() => filterByCategory(category.id)}>
+        {filterSpecs.map((specs, index) => (
+          <TouchableOpacity key={index} activeOpacity={0.8} onPress={() => console.log('cok')}>
             <View
               style={{
-                backgroundColor: selectedCategoryIndex == index ? COLORS.primary : COLORS.secondary,
+                backgroundColor: selectedCategoryIndex == index ? 'grey' : `#dcdcdc`,
                 ...style.categoryBtn,
               }}
             >
@@ -72,10 +77,10 @@ export default function AllTab({ navigation }) {
                   fontSize: 15,
                   fontWeight: 'bold',
                   marginLeft: 3,
-                  color: selectedCategoryIndex == index ? COLORS.white : COLORS.primary,
+                  color: selectedCategoryIndex == index ? COLORS.white : `#696969`,
                 }}
               >
-                {category.name}
+                {specs.name}
               </Text>
             </View>
           </TouchableOpacity>
@@ -83,6 +88,54 @@ export default function AllTab({ navigation }) {
       </ScrollView>
     );
   };
+
+  useEffect(() => {
+    dispatch(fetchAllDevices());
+    dispatch(fetchCategories());
+  }, []);
+
+  const ListCategories = () => {
+    return (
+      <>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={style.categoriesListContainer}>
+          {categoriesData.map((category, index) => (
+            <TouchableOpacity key={index} activeOpacity={0.8} onPress={() => filterByCategory(category.id, index)}>
+              <View
+                style={{
+                  backgroundColor: selectedCategoryIndex == index ? 'grey' : `#dcdcdc`,
+                  ...style.categoryBtn,
+                }}
+              >
+                {/* <View style={style.categoryBtnImgCon}>
+                <Image
+                  source={category.image}
+                  style={{
+                    height: 35,
+                    width: 35,
+                    resizeMode: 'contain',
+                    borderRadius: 100,
+                  }}
+                />
+              </View> */}
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 'bold',
+                    marginLeft: 3,
+                    color: selectedCategoryIndex == index ? COLORS.white : `#696969`,
+                  }}
+                >
+                  {category.name}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+        {/* <ListSpecs /> */}
+      </>
+    );
+  };
+
   const Card = ({ gadget }) => {
     return (
       <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9} onPress={() => navigation.navigate('DetailScreen', gadget)}>
@@ -91,31 +144,37 @@ export default function AllTab({ navigation }) {
             <Image
               source={{ uri: gadget.imgUrl }}
               style={{
-                height: 120,
-                width: 168,
+                height: 130,
+                width: 175,
                 resizeMode: 'cover',
-                borderRadius: 15,
+                borderRadius: 5,
               }}
             />
           </View>
-          <View style={{ marginHorizontal: 20 }}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>{gadget.name}</Text>
+          <View style={{ marginHorizontal: 20, marginTop: 10 }}>
+            <Text style={{ fontSize: 15, textAlign: 'center' }}>{gadget.name}</Text>
             {/* <Text style={{ fontSize: 14, color: COLORS.grey, marginTop: 2 }}>
               {gadget.ingredients}
             </Text> */}
           </View>
           <View
             style={{
-              marginTop: 10,
+              // marginTop: ,
               marginHorizontal: 20,
-              flexDirection: 'row',
+              // flexDirection: 'row',
               justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingTop: 10,
             }}
           >
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Rp {gadget.price}</Text>
-            <View style={style.addToCartBtn}>
-              <Icon name="add" size={20} color={COLORS.white} />
+            <View style={{ backgroundColor: gadget.specs === 'High-end' ? '#f08080' : gadget.specs === 'Mid-end' ? 'lightblue' : 'lightgreen', width: 75, height: 22, borderRadius: 5 }}>
+              <Text style={{ textAlign: 'center', fontSize: 14, paddingTop: 2.5 }}>{gadget.specs}</Text>
             </View>
+            <Text style={{ textAlign: 'center', fontSize: 14, fontWeight: 'bold' }}>Rp {gadget.price}</Text>
+            {/* <Text style={{ textAlign: 'center', fontSize: 14, fontWeight: 'bold' }}>Rp {gadget}</Text> */}
+            {/* <View style={style.addToCartBtn}>
+              <Icon specs="add" size={20} color={COLORS.white} />
+            </View> */}
           </View>
         </View>
       </TouchableHighlight>
@@ -149,17 +208,17 @@ export default function AllTab({ navigation }) {
         </View> */}
       </View>
       <View>
-        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 15, borderWidth: 1 }}>
+        {/* <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 15, borderWidth: 1 }}>
           <Button title="all" />
           <Button title="High-end" />
           <Button title="Mid-end" />
           <Button title="Low-end" />
-        </View>
-
-        <ListCategories />
+        </View> */}
+        <ListSpecs />
+        <ListCategories></ListCategories>
       </View>
 
-      <FlatList showsVerticalScrollIndicator={false} numColumns={2} data={filteredDevices} renderItem={({ item }) => <Card gadget={item} />} />
+      <FlatList style={{ paddingHorizontal: 10 }} showsVerticalScrollIndicator={false} numColumns={2} data={filteredDevices} renderItem={({ item }) => <Card gadget={item} />} />
     </SafeAreaView>
   );
 }
@@ -190,7 +249,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   categoriesListContainer: {
-    paddingVertical: 30,
+    paddingVertical: 10,
     alignItems: 'center',
     paddingHorizontal: 20,
   },
@@ -198,9 +257,9 @@ const style = StyleSheet.create({
     height: 45,
     // width: 120,
     marginRight: 7,
-    borderRadius: 30,
+    borderRadius: 10,
     alignItems: 'center',
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
     flexDirection: 'row',
     paddingRight: 10,
   },
@@ -214,11 +273,11 @@ const style = StyleSheet.create({
   },
   card: {
     height: 220,
-    width: cardWidth,
+    width: cardWidth - 10,
     marginHorizontal: 10,
-    marginBottom: 20,
-    marginTop: 50,
-    borderRadius: 15,
+    marginBottom: 15,
+    marginTop: 15,
+    borderRadius: 5,
     elevation: 13,
     backgroundColor: COLORS.white,
     borderColor: '#cccccc',
@@ -228,10 +287,10 @@ const style = StyleSheet.create({
     backgroundColor: `#F1EEED`,
     shadowColor: '#000',
     shadowOffset: {
-      width: 0,
+      width: 2,
       height: 5,
     },
-    shadowOpacity: 0.36,
+    shadowOpacity: 0.5,
     shadowRadius: 6.68,
 
     elevation: 11,
