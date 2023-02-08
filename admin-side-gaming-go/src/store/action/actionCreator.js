@@ -1,6 +1,6 @@
 import { FETCH_USER } from './actionType'
 
-const url = " http://localhost:3000"
+const url = " http://localhost:3001"
 
 export const registerHandler = (input) => {
     return fetch(url + '/admin/register', {

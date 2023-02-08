@@ -18,7 +18,7 @@ const ChatComponent = ({ item,mainUserId,userName }) => {
   useEffect(() => {
     if(userName.length !== 0) {
       const userIden = userName.find(val => val.id === (item.fromUserId === mainUserId ? item.toUserId : item.fromUserId));
-      console.log(userIden, " idennnnnnnnnn");
+      // console.log(userIden, " idennnnnnnnnn");
       setIdentifier(userIden);
     }
   }, [userName])
@@ -31,7 +31,7 @@ const ChatComponent = ({ item,mainUserId,userName }) => {
     });
   };
 
-  console.log(userName, "<<<<<<<<<<<<<<<<<<<<<<<< inside chat comp")
+  // console.log(userName, "<<<<<<<<<<<<<<<<<<<<<<<< inside chat comp")
 
   return (
     <Pressable style={stylesChat.cchat} onPress={handleNavigation}>

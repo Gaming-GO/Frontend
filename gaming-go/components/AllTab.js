@@ -10,7 +10,7 @@ import { fetchAllDevices, fetchByFilter, fetchCategories } from '../store/action
 const { width } = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 
-// const baseUrl = 'https://403a-139-192-36-123.ap.ngrok.io';
+// const baseUrl = 'https://ad2d-139-192-36-123.ap.ngrok.io';
 
 export default function AllTab({ navigation }) {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);

@@ -2,7 +2,7 @@ import { SafeAreaView } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useDispatch, useSelector } from 'react-redux';
 import { successCheckoutSlebew } from '../store/action/actionCreator';
-const baseUrl = 'https://403a-139-192-36-123.ap.ngrok.io';
+const baseUrl = 'https://ad2d-139-192-36-123.ap.ngrok.io';
 
 export default function MidTransScreen({ route, navigation }) {
   //   console.log(route.params.data.midtransToken.redirect_url);

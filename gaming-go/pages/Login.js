@@ -26,7 +26,7 @@ import { useDispatch } from 'react-redux';
 // };
 
 // const baseUrl = 'https://3104-2001-448a-110d-1aea-468-5dbe-c57f-7bee.ap.ngrok.io';
-const baseUrl = 'https://403a-139-192-36-123.ap.ngrok.io';
+const baseUrl = 'https://ad2d-139-192-36-123.ap.ngrok.io';
 
 export default function Login({ navigation }) {
   const dispatch = useDispatch();
