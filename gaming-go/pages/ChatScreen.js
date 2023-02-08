@@ -126,9 +126,6 @@ export default function RoomScreen() {
           <Text style={stylesChat.chatheading}>Chats</Text>
 
           {/* 👇🏻 Logs "ButtonPressed" to the console when the icon is clicked */}
-          <Pressable onPress={() => console.log("Button Pressed!")}>
-            <Feather name="edit" size={24} color="green" />
-          </Pressable>
         </View>
       </View>
 

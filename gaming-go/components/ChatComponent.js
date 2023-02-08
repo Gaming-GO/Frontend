@@ -35,12 +35,6 @@ const ChatComponent = ({ item,mainUserId,userName }) => {
 
   return (
     <Pressable style={stylesChat.cchat} onPress={handleNavigation}>
-      <Ionicons
-        name="person-circle-outline"
-        size={45}
-        color="black"
-        style={stylesChat.cavatar}
-      />
 
       <View style={stylesChat.crightContainer}>
         <View>

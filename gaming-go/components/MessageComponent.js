@@ -16,12 +16,6 @@ export default function MessageComponent({ item, currentUser }) {
         }
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Ionicons
-            name="person-circle-outline"
-            size={30}
-            color="black"
-            style={stylesChat.mavatar}
-          />
           <View
             style={
               status

@@ -204,12 +204,12 @@ export default function AllTab({ navigation }) {
       <View style={style.header}>
         <View>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={{ fontSize: 28 }}>Hello,</Text>
-            <Text style={{ fontSize: 28, fontWeight: 'bold', marginLeft: 10 }}>BTB</Text>
+            {/* <Text style={{ fontSize: 28 }}>Hello,</Text> */}
+            {/* <Text style={{ fontSize: 28, fontWeight: 'bold', marginLeft: 10 }}>BTB</Text> */}
           </View>
-          <Text style={{ marginTop: 5, fontSize: 22, color: COLORS.grey }}>What do you want today?</Text>
+          {/* <Text style={{ marginTop: 5, fontSize: 22, color: COLORS.grey }}>What do you want today?</Text> */}
         </View>
-        <Image source={require('../assets/icon.png')} style={{ height: 50, width: 50, borderRadius: 25 }} />
+        {/* <Image source={require('../assets/icon.png')} style={{ height: 50, width: 50, borderRadius: 25 }} /> */}
       </View>
       <View
         style={{
