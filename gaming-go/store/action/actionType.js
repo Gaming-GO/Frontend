@@ -1,0 +1,10 @@
+export const FETCH_USER = 'fetchUser';
+// export const REGISTER_USER = 'registerUser';
+export const SET_TOKEN = 'set_token';
+export const FETCH_TRANSACTION_SUCCESS = 'fetchTransactionsSucces';
+export const FETCH_NEAREST_SUCCES = 'slebewwww_nearest';
+export const FETCH_CATEGORIES = 'heyaaa';
+export const FETCH_ALL_DEVICES = 'Fetch_all';
+export const FETCH_BY_FILTER = 'fetch_by_filterrr';
+export const FETCH_HISTORY = 'fetch_history_succes';
+export const baseUrl = 'https://702f-2001-448a-1101-171a-4c51-8a97-e1e4-9b06.ap.ngrok.io';
