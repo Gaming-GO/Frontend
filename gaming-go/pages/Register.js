@@ -8,7 +8,7 @@ import * as Location from 'expo-location';
 // import { BASE_URL } from '../store/action/actionType';
 
 // const baseUrl = 'https://3104-2001-448a-110d-1aea-468-5dbe-c57f-7bee.ap.ngrok.io';
-const baseUrl = 'https://ad2d-139-192-36-123.ap.ngrok.io';
+const baseUrl = 'https://702f-2001-448a-1101-171a-4c51-8a97-e1e4-9b06.ap.ngrok.io';
 
 export default function Register({ navigation }) {
   const [email, setEmail] = useState('');
@@ -273,9 +273,9 @@ export default function Register({ navigation }) {
           <TouchableOpacity onPress={() => navigation.navigate('LoginPage')}>
             <Text style={styles.forgot_button}>login</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+          {/* <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
             <Text style={styles.forgot_button}>HomeScreen</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </ImageBackground>
       </ScrollView>
     </SafeAreaView>

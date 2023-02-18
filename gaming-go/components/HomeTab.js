@@ -6,15 +6,15 @@ import { fetchNearest } from '../store/action/actionCreator';
 const { width } = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 
-import Carousel from 'react-native-reanimated-carousel'
+import Carousel from 'react-native-reanimated-carousel';
 import COLORS from '../constants/colors';
 
 const images = [
   'https://cdn1-production-images-kly.akamaized.net/YDew-Y-9yOrMhX4sHJ4xLDfUDN4=/640x360/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/3540960/original/009739200_1629026250-rog_zephyrus_m16.jpg',
   'https://assets3.razerzone.com/gGI3HDoCD5iavWrRhTXbwDOyh4U=/1500x1000/https%3A%2F%2Fhybrismediaprod.blob.core.windows.net%2Fsys-master-phoenix-images-container%2Fhe1%2Fhe0%2F9286404931614%2F210104-blade-17-d8-fhd-1500x1000-1.jpg',
   'https://storage-asset.msi.com/global/picture/image/feature/desktop/Aegis-Ti5/Product-video-MEG-Aegis-Ti5-thumbnail-2.jpg',
-  'https://cdn.urbandigital.id/wp-content/uploads/2017/11/Xbox-One.jpg'
-]
+  'https://cdn.urbandigital.id/wp-content/uploads/2017/11/Xbox-One.jpg',
+];
 
 const { height } = Dimensions.get('window');
 const SCREEN_WIDTH = width < height ? width : height;
@@ -88,8 +88,8 @@ export default function HomeTab({ navigation }) {
           </View>
         </View>
       </TouchableHighlight>
-    )
-  }
+    );
+  };
 
   const RenderCategory = ({ data }) => {
     return (
@@ -118,34 +118,30 @@ export default function HomeTab({ navigation }) {
             marginBottom: 20,
             flex: 1,
           }}
-        >
-        </View>
+        ></View>
         <View>
-          <Text style={styles.category}>Upcoming Devices</Text>
+          <Text style={styles.category}></Text>
           <TouchableOpacity>
-            <View>
-              <Carousel 
-                loop
+            <View style={{ paddingLeft: -40 }}>
+              <Carousel
+                // loop
                 width={width}
                 height={width / 2}
-                autoPlay={true}
+                autoPlay={false}
                 data={images}
                 scrollAnimationDuration={3000}
                 // onSnapToItem={(index) => console.log('current index:', index)}
                 panGestureHandlerProps={{
-                  activeOffsetX: [-10, 10]
+                  activeOffsetX: [-10, 10],
                 }}
                 renderItem={({ index }) => (
-                  <View 
-                    style={{flex:1, borderWidth:1, justifyContent:'center', flexDirection:'row', paddingLeft:350}}
-                  >
-                    {
-                      images.map((e, index) => {
-                        return <Image source={{ uri: e }} key={index} style={{width: 365, height:180}} resizeMode='cover' />
-                        // return console.log(e)
-                      })
-                    }
+                  <View style={{ flex: 1, width: width, borderWidth: 1, justifyContent: 'center', flexDirection: 'row', paddingLeft: 480 }}>
+                    {images.map((e, index) => {
+                      return <Image source={{ uri: e }} key={index} style={{ width: 450, height: 210 }} resizeMode="cover" />;
+                      // return console.log(e)
+                    })}
                   </View>
+
                   // <View
                   //       style={{
                   //           flex: 1,
@@ -164,7 +160,8 @@ export default function HomeTab({ navigation }) {
         </View>
       </ScrollView>
       {/* <View style={{ height: 10, position: 'relative' }}></View> */}
-      <View style={{ flex: 3 }}>
+      {/* <Text style={{ paddingLeft: 40, f }}>Nearest</Tex */}
+      <View style={{ flex: 100, paddingLeft: 30 }}>
         <FlatList
           vertical
           // data={data}
@@ -177,7 +174,7 @@ export default function HomeTab({ navigation }) {
         <View
           style={{
             position: 'absolute',
-            marginTop: 330,
+            marginTop: 400,
             alignSelf: 'flex-end',
             justifyContent: 'flex-end',
           }}
@@ -196,6 +193,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
     backgroundColor: `#fff`,
+    marginLeft: -20,
   },
   photo: {
     width: (SCREEN_WIDTH - (recipeNumColums + 1) * RECIPE_ITEM_MARGIN) / recipeNumColums,

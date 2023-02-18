@@ -9,6 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AddTab from '../components/AddTab';
 // import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 const Tab = createBottomTabNavigator();
+// NAMA YANG KEPANJANAGN DIRUBAH DAR DB BIAR ENAK DILIHAT
 
 export default function HomeScreen() {
   return (

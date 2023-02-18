@@ -2,7 +2,9 @@ import { FETCH_ALL_DEVICES, FETCH_BY_FILTER, FETCH_CATEGORIES, FETCH_HISTORY, FE
 
 const users = {
   users: [],
-  access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc1ODY4MzYzfQ.jVuRLVRTYJXxJuaNRdobjnY5YvKXahW15rcMnNHgtE8',
+  // access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc1ODY4MzYzfQ.jVuRLVRTYJXxJuaNRdobjnY5YvKXahW15rcMnNHgtE8',
+  // access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTY3NTY5NDQ5MH0.FRCFAqcZgIQC5KcCZsRX1uxYyE6fO4KZ0bp5Q0HpoNo',
+  access_token: '',
   Transaction: { Details: [] },
   nearest: [],
   categories: [],

@@ -9,7 +9,7 @@ import { PrimaryButton } from './button';
 import { WebView } from 'react-native-webview';
 import { fetchHistory, fetchTransaction } from '../store/action/actionCreator';
 
-const baseUrl = 'https://ad2d-139-192-36-123.ap.ngrok.io';
+const baseUrl = 'https://702f-2001-448a-1101-171a-4c51-8a97-e1e4-9b06.ap.ngrok.io';
 
 export default function TransactionTab({ navigation }) {
   const [interval, setInterval] = useState(0);
@@ -161,7 +161,7 @@ export default function TransactionTab({ navigation }) {
           <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Total Price</Text>
           <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Rp. {slebew.Transaction ? slebew.Transaction.totalPrice : '0'}</Text>
         </View>
-        <View style={{ marginHorizontal: 30, paddingLeft: 87, paddingBottom: 10 }}>
+        <View style={{ marginHorizontal: 120, paddingBottom: 10 }}>
           <PrimaryButton title="CHECKOUT" onPress={() => checkout()} />
         </View>
       </View>

@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -9,31 +9,35 @@ import { addTransactionFromHehe } from '../store/action/actionCreator';
 
 // const baseUrl = 'https://3104-2001-448a-110d-1aea-468-5dbe-c57f-7bee.ap.ngrok.io';
 // const baseUrl = 'https://e06d-2001-448a-1101-171a-85d2-8409-5431-4c0.ap.ngrok.io';
-const baseUrl = 'https://ad2d-139-192-36-123.ap.ngrok.io';
+const baseUrl = 'https://702f-2001-448a-1101-171a-4c51-8a97-e1e4-9b06.ap.ngrok.io';
 
 const DetailsScreen = ({ navigation, route }) => {
   const [rentEnd, setRentEnd] = useState(1);
   const [currentUser, setCurrentUser] = useState(0);
   const gadget = route.params;
 
+  console.log(gadget.UserId, '<<<<<');
+
   const dispatch = useDispatch();
 
+  const selectToken = useSelector((state) => state.users.access_token);
+  // access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc1ODY4MzYzfQ.jVuRLVRTYJXxJuaNRdobjnY5YvKXahW15rcMnNHgtE8',
   useEffect(() => {
-    fetch(baseUrl + "/pub/user", {
+    fetch(baseUrl + '/pub/user/0', {
       headers: {
-        "Content-Type": "application/json",
-        access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc1ODY4MzYzfQ.jVuRLVRTYJXxJuaNRdobjnY5YvKXahW15rcMnNHgtE8"
-      }
+        'Content-Type': 'application/json',
+        access_token: selectToken,
+      },
     })
-    .then(resp => {
-      if(!resp.ok) throw {name:"Failed here", status:resp.status}
-      return resp.json()
-    })
-    .then(data => {
-      setCurrentUser(data.id)
-    })
-    .catch(err => console.log(err))
-  }, [])
+      .then((resp) => {
+        if (!resp.ok) throw { name: 'Failed here', status: resp.status };
+        return resp.json();
+      })
+      .then((data) => {
+        setCurrentUser(data.id);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   // console.log(gadget, '<<<<atengOcis');
 
@@ -110,9 +114,13 @@ const DetailsScreen = ({ navigation, route }) => {
       <View style={{ paddingVertical: 40, backgroundColor: '#696969', borderBottomRightRadius: 30, borderBottomLeftRadius: 30, justifyContent: 'center', alignContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
         <SecondaryButton title="Add To Cart" onPress={() => addTransaction(gadget.id)} />
         <Text style={{ color: '#696969' }}>_</Text>
-        <SecondaryButton title="Chat Seller" onPress={() => {
-              console.log(gadget.UserId, currentUser, " att button");
-              navigation.navigate("Messaging", {toUserId:gadget.UserId,fromUserId:currentUser})}}/>
+        <SecondaryButton
+          title="Chat Seller"
+          onPress={() => {
+            console.log(gadget.UserId, currentUser, ' att button');
+            navigation.navigate('Messaging', { toUserId: gadget.UserId, fromUserId: currentUser });
+          }}
+        />
       </View>
     </SafeAreaView>
   );

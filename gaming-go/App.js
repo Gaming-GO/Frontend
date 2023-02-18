@@ -12,6 +12,9 @@ import { Provider } from 'react-redux';
 import store from './store/index';
 import MidTransScreen from './pages/Midtrans';
 import History from './pages/History';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs();
 
 const Stack = createStackNavigator();
 
@@ -26,8 +29,8 @@ export default function App() {
             tabBarActiveTintColor: 'tomato',
           }}
         >
-          {/* <Stack.Screen name="LoginPage" component={Login} options={{ headerShown: false }} />
-          <Stack.Screen name="RegisterPage" component={Register} options={{ headerShown: false }} /> */}
+          <Stack.Screen name="LoginPage" component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name="RegisterPage" component={Register} options={{ headerShown: false }} />
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="DetailScreen" component={DetailsScreen} />
           <Stack.Screen name="ChatScreen" component={RoomScreen} />
